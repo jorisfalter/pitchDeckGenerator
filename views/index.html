@@ -10,24 +10,17 @@
 
 <body>
     <div class="container">
-        <h1>Make RJ Happy</h1>
-        <h2>Pitch Deck Content</h2>
+        <h1>Pitch Deck Content</h1>
+        <h2>Make RJ Happy</h2>
 
         <div class="idea-box">
             <p>What’s Your Idea?</p>
-            <textarea placeholder="..."></textarea>
-            <button onclick="generateSlides()">Go!</button>
+            <textarea id="idea-input" placeholder="..."></textarea>
+            <button onclick="submitIdea()">Go!</button>
         </div>
 
-        <div class="slides">
-            <div class="slide">
-                <p>Slide 1: <i>Problem Statement</i></p>
-                <p>...</p>
-            </div>
-            <div class="slide">
-                <p>Slide 2: <i>Proposed Solution</i></p>
-                <p>...</p>
-            </div>
+        <div class="slides" id="slides">
+            <!-- Responses will be appended here -->
         </div>
     </div>
 
