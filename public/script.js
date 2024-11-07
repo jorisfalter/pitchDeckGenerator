@@ -1,10 +1,17 @@
 async function submitIdea() {
   const idea = document.getElementById("idea-input").value;
+  const goButton = document.getElementById("go-button");
+  const loadingDots = document.getElementById("loading-dots");
+  const dots = document.querySelectorAll(".dot"); // Select each dot
 
   if (!idea) {
     alert("Please enter an idea");
     return;
   }
+
+  // Show loading dots and hide the "Go" button
+  goButton.style.display = "none";
+  loadingDots.style.display = "flex";
 
   // Define different prompts for each slide
   const prompts = [
@@ -14,6 +21,8 @@ async function submitIdea() {
     "Suggest a go-to-market strategy",
     "Identify potential competitors",
   ];
+
+  const slide_titles = ["", "", "", "", "", "", "", "", ""];
 
   try {
     // Send the idea and prompts to the backend
@@ -31,15 +40,24 @@ async function submitIdea() {
 
     // Display each response in a new slide
     data.responses.forEach((reply, index) => {
+      console.log(reply);
       const slide = document.createElement("div");
       slide.classList.add("slide");
+
       slide.innerHTML = `<p>Slide ${index + 1}: ${
-        prompts[index]
-      }</p><p>${reply}</p>`;
+        slide_titles[index]
+        // }</p><pre>${reply}</pre>`;
+      }</p>${reply}`;
+
       slidesContainer.appendChild(slide);
     });
   } catch (error) {
     console.error("Error fetching responses:", error);
     alert("An error occurred. Please try again.");
+  } finally {
+    // Stop the dots animation by setting animation to 'none'
+    dots.forEach((dot) => (dot.style.animation = "none"));
+    loadingDots.style.display = "none"; // Hide loading dots
+    goButton.style.display = "block"; // Show the "Go" button again
   }
 }

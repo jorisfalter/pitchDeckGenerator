@@ -83,17 +83,58 @@
     border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     text-align: left;
+    width: 100%;
+    max-width: 800px; /* Optional: limits the width of each slide */
+    overflow-wrap: break-word; /* Ensures long words break to fit */
+    white-space: pre-wrap; /* Preserves formatting with line breaks and spaces */
   }
   
   .slide p {
     margin: 5px 0;
     font-size: 1rem;
     color: #333;
+
   }
   
   .slide p:first-child {
     /* font-weight: bold; */
-    color: #999; /* Grayish color for the title */
+    color: #999;
     font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .loading-dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: flex-start; /* Left-align the dots */
+  }
+  
+  .dot {
+    font-size: 1.5rem;
+    color: #3388ff;
+    opacity: 0;
+    animation: blink 1s infinite;
+  }
+  
+  .dot:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes blink {
+    0%, 20%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
   }
   

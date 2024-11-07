@@ -16,8 +16,16 @@
         <div class="idea-box">
             <p>What’s Your Idea?</p>
             <textarea id="idea-input" placeholder="..."></textarea>
-            <button onclick="submitIdea()">Go!</button>
+            <div id="go-button-container">
+                <button onclick="submitIdea()" id="go-button">Go!</button>
+                <div class="loading-dots" id="loading-dots" style="display: none;">
+                    <span class="dot">●</span>
+                    <span class="dot">●</span>
+                    <span class="dot">●</span>
+                </div>
+            </div>
         </div>
+
 
         <div class="slides" id="slides">
             <!-- Responses will be appended here -->
