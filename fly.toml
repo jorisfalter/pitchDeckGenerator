@@ -7,7 +7,6 @@ app = 'pitchdeckgenerator'
 primary_region = 'ams'
 
 [build]
-  builder = "heroku/buildpacks:20" # optional, uses Heroku buildpacks
 
 [deploy]
 command = "node app.js"
