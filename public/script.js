@@ -15,7 +15,7 @@ async function submitIdea() {
 
   // Define different prompts for each slide
   const prompts = [
-    "Explain The Problem for this idea, make it convincing, try to pinpoint specific numbers to strengthen the case",
+    "Explain The Problem Statement for this idea, make it convincing, try to pinpoint specific numbers to strengthen the case",
     "Explain The Solution for this idea in 15 words or less. Add an unfair advantage this solution has",
     "Define the Value Prop for this idea for the customer or user. What differentiates this solution from any other solution?",
     "Come up with the best business model for this idea",
@@ -75,3 +75,15 @@ async function submitIdea() {
     goButton.style.display = "block"; // Show the "Go" button again
   }
 }
+
+document
+  .getElementById("idea-input")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      // Prevent the default behavior of form submission, if within a form
+      event.preventDefault();
+
+      // Trigger the "Go" button's click
+      document.getElementById("go-button").click();
+    }
+  });

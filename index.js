@@ -20,31 +20,46 @@ app.post("/api/generate", async (req, res) => {
   const { idea, prompts } = req.body;
 
   try {
-    // Send a request for each prompt to the OpenAI API
-    const responses = await Promise.all(
-      prompts.map(async (prompt) => {
-        const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            model: "gpt-3.5-turbo", // Use appropriate model version
-            messages: [{ role: "user", content: `${prompt}: ${idea}` }],
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-            },
-          }
-        );
-        return response.data.choices[0].message.content;
-      })
-    );
+    const responses = [];
+    let conversationHistory = [
+      { role: "user", content: idea }, // Start with the initial idea
+    ];
 
+    // Loop through each prompt sequentially
+    for (const prompt of prompts) {
+      // Send a request to the OpenAI API for the current prompt
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4-turbo",
+          messages: [...conversationHistory, { role: "user", content: prompt }],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          },
+        }
+      );
+
+      // Extract the content from the API response
+      const assistantResponse = response.data.choices[0].message.content;
+      responses.push(assistantResponse); // Store the response
+      console.log(responses);
+
+      conversationHistory.push(
+        { role: "user", content: prompt },
+        { role: "assistant", content: assistantResponse }
+      );
+    }
+
+    // Send the accumulated responses back to the client
     res.json({ responses });
   } catch (error) {
     console.error("Error generating response:", error);
-    res.status(500).json({ error: "Error generating response" });
+    res.status(500).json({ error: "Failed to generate response" });
   }
+  console.log("finished defining responses");
 });
 
 // Start the server
