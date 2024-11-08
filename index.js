@@ -27,6 +27,8 @@ app.post("/api/generate", async (req, res) => {
 
     // Loop through each prompt sequentially
     for (const prompt of prompts) {
+      console.log("working on slide number: " + responses.length);
+
       // Send a request to the OpenAI API for the current prompt
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
@@ -45,7 +47,6 @@ app.post("/api/generate", async (req, res) => {
       // Extract the content from the API response
       const assistantResponse = response.data.choices[0].message.content;
       responses.push(assistantResponse); // Store the response
-      console.log(responses);
 
       conversationHistory.push(
         { role: "user", content: prompt },
